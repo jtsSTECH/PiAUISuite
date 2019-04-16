@@ -20,7 +20,7 @@ This requires:
 
 To install the dependencies, run:
 ```bash
-sudo apt-get install -y libboost-dev libboost-regex-dev youtube-dl axel curl xterm libcurl4-gnutls-dev mpg123 flac sox
+sudo apt-get install -y libboost-dev libboost-regex-dev youtube-dl axel curl xterm libcurl4-gnutls-dev mpg123 flac sox libttspico-utils
 ```
 
 To install PiAUISuite (Silva Tech Forked Version):
