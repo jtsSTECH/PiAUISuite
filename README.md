@@ -1,4 +1,5 @@
-# Alternative User Interface
+# Forked from the awesome work of Steven Hickson
+Forked from the awesome work of Steven Hickson on 4/15/19.  Updated it to work based on current bugs with TTS/missing libraries.
 
 Includes voicecommand, download, playvideo, and textcommand scripts
 
@@ -15,9 +16,9 @@ To install the dependencies, run:
 sudo apt-get install -y libboost-dev libboost-regex-dev youtube-dl axel curl xterm libcurl4-gnutls-dev mpg123 flac sox
 ```
 
-To install PiAUISuite:
+To install PiAUISuite (Silva Tech Forked Version):
 ```bash
-git clone https://github.com/StevenHickson/PiAUISuite.git
+git clone https://github.com/jtsSTECH/PiAUISuite.git
 cd PiAUISuite/Install
 ./InstallAUISuite.sh
 ```
@@ -42,4 +43,4 @@ Copyright
 
 [GPLv3](https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3))
 
-Steven Hickson
+Jeremy Silva
