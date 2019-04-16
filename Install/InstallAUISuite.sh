@@ -15,6 +15,9 @@ function dependencies() {
         else
             sudo apt-get install locate curl libboost-dev libboost-regex-dev xterm xfonts-base xfonts-utils youtube-dl axel mpg123 libcurl4-openssl-dev flac sox
         fi
+        #jts 4/16/19 add a link to support the booster
+        sudo ln -s /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.62.0 /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.49.0
+
     fi
     fi
 }
