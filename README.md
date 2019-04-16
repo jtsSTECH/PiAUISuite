@@ -1,5 +1,12 @@
 # Forked from the awesome work of Steven Hickson
 Forked from the awesome work of Steven Hickson on 4/15/19.  Updated it to work based on current bugs with TTS/missing libraries.
+Fixes:
+* fix missing LN for boost library
+* remove sample rates from flac commands
+* new TTS fix script for pico2wave replacement (from: https://github.com/StevenHickson/PiAUISuite/issues/56#issuecomment-205715002)
+
+
+
 
 Includes voicecommand, download, playvideo, and textcommand scripts
 
@@ -62,6 +69,13 @@ Google==google ...
 !filler==0
 !thresh==0.7
 !keyword==computer
+
+# Testing TTS
+
+1.) Test tts.  Type the following
+tts "testing 123"
+You should hear that phrase repeated back to you robotically via your sound interface if it is working correctly.
+
 
 ## Different Parts
 
