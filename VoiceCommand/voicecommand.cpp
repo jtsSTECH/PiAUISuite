@@ -7,6 +7,8 @@ void changemode(int);
 int  kbhit(void);
 
 static const char *optString = "I:l:d:D:psb::c::v::ei::q::t:k:r:f:h?";
+// changed 16000 to 48000 4/16/19 jts..reverted back to 16
+//  g++ -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -D'BUILDTS="160506 05:20:31 -0700"' -O3 -lcurl -lboost_regex -o voicecommand voicecommand.cpp
 
 inline void ProcessVoice(FILE *cmd, VoiceCommand &vc, char *message) {
     printf("Found audio\n");
@@ -21,6 +23,7 @@ inline void ProcessVoice(FILE *cmd, VoiceCommand &vc, char *message) {
     command += " -l ";
     command += vc.lang;
     cmd = popen(command.c_str(),"r");
+    printf("\n jts running command %s",command.c_str());
     fscanf(cmd,"\"%[^\"\n]\"",message);
     vc.ProcessMessage(message);
     fclose(cmd);
@@ -90,14 +93,15 @@ int main(int argc, char* argv[]) {
             if(volume > vc.thresh) {
                 //printf("Found volume %f above thresh %f\n",volume,vc.thresh);
                 if(vc.verify) {
-                    system("flac /dev/shm/noise.wav -f --best --sample-rate 16000 -o /dev/shm/noise.flac 1>>/dev/shm/voice.log 2>>/dev/shm/voice.log");
+                    //4/16/19 fix line jts system("flac /dev/shm/noise.wav -f --best --sample-rate 16000 -o /dev/shm/noise.flac 1>>/dev/shm/voice.log 2>>/dev/shm/voice.log");
+                    system("flac /dev/shm/noise.wav -f --best -o /dev/shm/noise.flac 1>>/dev/shm/voice.log 2>>/dev/shm/voice.log");
                     cmd = popen(cont_com.c_str(),"r");
                     if(cmd == NULL)
                         printf("ERROR\n");
                     fscanf(cmd,"\"%[^\"\n]\"",message);
                     fclose(cmd);
                     system("rm -fr /dev/shm/noise.*");
-                    //printf("message: %s, keyword: %s\n", message, vc.keyword.c_str());
+                    printf("message: %s, keyword: %s\n", message, vc.keyword.c_str());
                     if(iequals(message,vc.keyword.c_str())) {
                         message[0] = '\0'; //this will clear the first bit
                         ProcessVoice(cmd,vc,message);
@@ -296,22 +300,28 @@ inline void VoiceCommand::ProcessMessage(const char* message) {
     while(i < voice.size()) {
         loc = sTmp.find(voice[i]);
         if(loc == 0) {
+            printf("\n jts LOC=0 line 303");
             tmp = commands[i];
             loc = tmp.find("...");
             if(loc != string::npos) {
+                printf("\n jts found locations 307");
                 //Found ... Initiating special options
                 string newcommand = tmp.substr(0,loc-1);
                 string options = message;
                 newcommand += options.substr(voice[i].length());
-                if(passthrough)
+                if(passthrough){
+                    printf("\n jtspassthru 313");
                     printf("%s",newcommand.c_str());
+                }
                 else {
                     printf("command: %s\n",newcommand.c_str());
                     system(newcommand.c_str());
                 }
             } else {
-                if(passthrough)
+                if(passthrough){
+                    printf("\n jts no location passthru 320");
                     printf("%s",tmp.c_str());
+                }
                 else {
                     printf("command: %s\n",tmp.c_str());
                     system(tmp.c_str());
@@ -319,26 +329,30 @@ inline void VoiceCommand::ProcessMessage(const char* message) {
             }
             return;
         } else if( voice[i][0] == '~' ) {
+            printf("\n jts checking voice 332");
 	    // see whether the voice keyword is *anywhere* in the message
 	    string v = voice[i].substr(1, string::npos);
 	    loc = sTmp.find(v);
 	    //printf("v: %s\tloc: %d\tsTmp: %s\n",v.c_str(),loc,sTmp.c_str());
-	    if( loc != string::npos && loc != -1) {				
+	    if( loc != string::npos && loc != -1) {	
+            printf("\n jts found string for voicekeyword");			
 	        // if it does, return
-                if(passthrough)
+                if(passthrough){
+                    printf("\n jts passthrough 341");         
                     printf("%s",commands[i].c_str());
+                }
                 else {
 	            printf("command: %s\n",commands[i].c_str());
 		    system(commands[i].c_str());
                 }
 		return;
 	    }				
-	} else {
+	} else { printf("\n jts final else 350");           
             regex rexp("\\$(\\d+)"); cmatch m;
             if(regex_search(voice[i].c_str(), m, rexp)) {
                 //Found $ Initiating special options
                 int num_var = m.size() + 1;
-                //fprintf(stderr, "Found # %d $s, initiating special option\n", num_var);
+                fprintf(stderr, "Found # %d $s, initiating special option\n", num_var);
                 string match = voice[i];
                 for(int j = 1; j <= num_var; j++) {
                     stringstream replace;
@@ -351,7 +365,7 @@ inline void VoiceCommand::ProcessMessage(const char* message) {
                 if(regex_search(sTmp.c_str(), n, rexp2)) {
                     string run = commands[i];
                     for(int j = 0; j <= num_var; j++) {
-                        //fprintf(stderr, "Found %s, initiating special option stage2\n",string(n[j]).c_str());
+                        fprintf(stderr, "Found %s, initiating special option stage2\n",string(n[j]).c_str());
                         stringstream replace;
                         replace << "$";
                         replace << j;
