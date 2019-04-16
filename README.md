@@ -38,12 +38,18 @@ It will:
 
 This is the default config file that works well for us. Edit and paste this into your .commands.conf to get started.  
 When voicecommand is running, you should be able to say: 
+
+```bash
 "computer"
 ** wait a second **
 "check"
+```
 
-Its like using Alexa/Google assistant, and you should immediately see it trying to ping Google as a test.  The rest of the commands are from Steven Hickson's original file.
+Its like using Alexa/Google assistant, and you should immediately see it trying to ping Google as a test.  
+The rest of the commands are from Steven Hickson's original file.
 
+
+```bash
 !response==Yes Sir?
 check==ping google.com
 show me==/home/pi/AUI/Imaging/test 2
@@ -69,11 +75,18 @@ Google==google ...
 !filler==0
 !thresh==0.7
 !keyword==computer
+```
 
 # Testing TTS
 
-1.) Test tts.  Type the following
+Test tts.  Type the following
+
+```bash
+
 tts "testing 123"
+
+
+```
 You should hear that phrase repeated back to you robotically via your sound interface if it is working correctly.
 
 
