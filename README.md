@@ -27,6 +27,42 @@ It will:
 * ask if you want to install the dependencies
 * to install each script
 
+## Sample Config File:
+
+This is the default config file that works well for us. Edit and paste this into your .commands.conf to get started.  
+When voicecommand is running, you should be able to say: 
+"computer"
+** wait a second **
+"check"
+
+Its like using Alexa/Google assistant, and you should immediately see it trying to ping Google as a test.  The rest of the commands are from Steven Hickson's original file.
+
+!response==Yes Sir?
+check==ping google.com
+show me==/home/pi/AUI/Imaging/test 2
+track me==/home/pi/AUI/Imaging/test 1
+download==download ...
+play $1 season $2 episode $3==playvideo -s $2 -e $3 $1
+download $1 season $2 episode $3==download $1 s$2e$3
+play==playvideo -r -f ...
+multiple==playvideo -r -m -c 5 ...
+download==download ...
+YouTube==youtube-search ...
+Google==google ...
+~music==xterm -e pianobar
+~weather==/home/pi/AUI/Misc/sayweather.sh
+~made you==tts "I was created by Steven Hickson" 2>/dev/null
+~music==xterm -e control-pianobar.sh play
+~terminal==xterm &
+~Internet==midori &
+!continuous==1
+!verify==1
+!ignore==1
+!quiet==0
+!filler==0
+!thresh==0.7
+!keyword==computer
+
 ## Different Parts
 
 Name | Purpose | Blogpost
