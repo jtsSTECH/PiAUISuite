@@ -6,7 +6,7 @@ Fixes:
 * new TTS fix script for pico2wave replacement (from: https://github.com/StevenHickson/PiAUISuite/issues/56#issuecomment-205715002)
 
 
-
+Checkout our voicecommand project we used it in: https://www.silvatechsolutions.com/tech-tips/voice-recognition-party-lights/
 
 Includes voicecommand, download, playvideo, and textcommand scripts
 
